@@ -9,8 +9,8 @@ namespace XamarinTestApp1
         public App()
         {
             InitializeComponent();
-
-            MainPage = new NavigationPage (new MainPage());
+            MainPage = new NavigationPage(new TablesListPage());
+            //MainPage = new NavigationPage (new MainPage());
         }
 
         protected override void OnStart()

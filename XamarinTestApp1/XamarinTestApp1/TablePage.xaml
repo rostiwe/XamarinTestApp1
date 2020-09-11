@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="XamarinTestApp1.TablePage">
+    <ContentPage.Content>
+		<StackLayout>
+			<StackLayout>
+				<Label Text="Код" />
+				<Entry Text="{Binding Path=Model.Qrcode}" FontSize="Medium" />
+				<Label Text="Этот месяц" />
+				<Entry Text="{Binding Path=Model.ThisMonth}" FontSize="Medium" />
+				<Label Text="Всего" />
+				<Entry Text="{Binding Path=Model.AllTime}" FontSize="Medium" />
+				<Label Text="Примечания" />
+				<Entry Text="{Binding Path=Model.Примечания}" FontSize="Medium" />
+			</StackLayout>
+			<StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand">
+				<Button Text="Сохранить" Command="{Binding ViewModel.SaveTableCommand}" CommandParameter="{Binding Model}" />
+				<Button Text="Удалить" Command="{Binding ViewModel.DeleteTableCommand}" CommandParameter="{Binding Model}" />
+				<Button Text="Назад" Command="{Binding Path=ViewModel.BackCommand}" />
+			</StackLayout>
+		</StackLayout>
+	</ContentPage.Content>
+</ContentPage>
