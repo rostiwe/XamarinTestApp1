@@ -20,5 +20,10 @@ namespace XamarinTestApp1
             ViewModel = viewModel;
             this.BindingContext = this;
         }
+        protected override async void OnDisappearing()
+        {
+            await ViewModel.Gettables();
+            base.OnDisappearing();
+        }
     }
 }

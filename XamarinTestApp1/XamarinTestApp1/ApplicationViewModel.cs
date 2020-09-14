@@ -5,6 +5,7 @@ using System.Windows.Input;
 using Xamarin.Forms;
 using System.Linq;
 using System.Threading.Tasks;
+using System;
 
 namespace XamarinTestApp1
 {
@@ -30,6 +31,11 @@ namespace XamarinTestApp1
                 OnPropertyChanged("IsBusy");
                 OnPropertyChanged("IsLoaded");
             }
+        }
+        public bool IsNotBusy 
+        {
+            get { return !isBusy; }
+           
         }
         public bool IsLoaded
         {
@@ -84,21 +90,36 @@ namespace XamarinTestApp1
 
         public async Task Gettables()
         {
-            if (initialized == true) return;
-            IsBusy = true;
-            IEnumerable<Table> tables = await tableService.Get();
+            if (initialized == true)
+            {
+                IsBusy = true;
+                IEnumerable<Table> tables = await tableService.Get();
+                // очищаем список
+                while (Tables.Any())
+                    Tables.RemoveAt(Tables.Count - 1);
 
-            // очищаем список
-            while (Tables.Any())
-                Tables.RemoveAt(Tables.Count - 1);
+                // добавляем загруженные данные
+                foreach (Table f in tables)
+                    Tables.Add(f);
+                IsBusy = false;
+            }
+            else
+            {
+                IsBusy = true;
+                IEnumerable<Table> tables = await tableService.Get();
 
-            // добавляем загруженные данные
-            foreach (Table f in tables)
-                Tables.Add(f);
-            IsBusy = false;
-            initialized = true;
+                // очищаем список
+                while (Tables.Any())
+                    Tables.RemoveAt(Tables.Count - 1);
+
+                // добавляем загруженные данные
+                foreach (Table f in tables)
+                    Tables.Add(f);
+                IsBusy = false;
+                initialized = true;
+            }
         }
-        private async void SaveTable(object tableObject)
+        public async void SaveTable(object tableObject)
         {
             Table table = tableObject as Table;
             if (table != null)
@@ -119,9 +140,17 @@ namespace XamarinTestApp1
                 // добавление
                 else
                 {
-                    Table addedFriend = await tableService.Add(table);
-                    if (addedFriend != null)
-                        Tables.Add(addedFriend);
+                    string Result = "";
+                    for (int i = 0; i < table.Qrcode.Length; i++)
+                        Result += Convert.ToString(Convert.ToInt32(table.Qrcode[i]));
+                    table.Id = Convert.ToInt32(Result);
+                    if (table.ThisMonth == null)
+                        table.ThisMonth = 0;
+                    if (table.AllTime == null)
+                        table.AllTime = 0;
+                    Table addedTable = await tableService.Add(table);
+                    if (addedTable != null)
+                        Tables.Add(addedTable);
                 }
                 IsBusy = false;
             }

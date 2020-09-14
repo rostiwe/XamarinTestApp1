@@ -13,22 +13,24 @@ namespace XamarinTestApp1
     public partial class TablesListPage : ContentPage
     {
         ApplicationViewModel viewModel;
-        public TablesListPage()
+        public TablesListPage(ApplicationViewModel viewModel)
         {
             InitializeComponent();
-            viewModel = new ApplicationViewModel() { Navigation = this.Navigation };
+            this.viewModel = viewModel;
             BindingContext = viewModel;
         }
-
+        protected override async void OnDisappearing()
+        {
+            await viewModel.Gettables();
+            base.OnDisappearing();
+        }
         protected override async void OnAppearing()
         {
             await viewModel.Gettables();
             base.OnAppearing();
         }
-        public void update()
-        {
-            viewModel = new ApplicationViewModel() { Navigation = this.Navigation };
-            BindingContext = viewModel;
-        }
+
+
+
     }
 }

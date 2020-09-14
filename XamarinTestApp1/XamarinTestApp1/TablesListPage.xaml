@@ -4,7 +4,6 @@
              x:Class="XamarinTestApp1.TablesListPage" Title="Список позиций">
 	<StackLayout>
 		<Button Text="Добавить" Command="{Binding CreateTableCommand}" IsEnabled="{Binding IsLoaded}" />
-		<Button Text="Обновить" Command="{Binding update}" IsEnabled="{Binding IsLoaded}" />
 		<ListView x:Name="tablesList" ItemsSource="{Binding Tables}"
               SelectedItem="{Binding SelectedTable, Mode=TwoWay}" HasUnevenRows="True">
 			<ListView.ItemTemplate>

@@ -9,9 +9,17 @@
 
 	<ContentPage.Content>
 	<StackLayout>
-	    <Button Text="Сканировать" x:Name="Button1" Clicked="Button_Clicked"/>
+			<Button Text="Сканировать" IsVisible ="{Binding IsNotBusy}" x:Name="Button1" Clicked="Button_Clicked"/>
 		<Label Text="" x:Name="Label1" TextColor="Black" HorizontalOptions="Center"/>
 		<Label Text="" x:Name="Label2" TextColor="Red" HorizontalOptions="Center"/>
+			<Button Text="Открыть список"  IsVisible ="{Binding IsNotBusy}"  x:Name="Button2" Clicked="Button_Clicked_2"/>
+			<StackLayout IsVisible="{Binding IsBusy}"
+                    HorizontalOptions="Center" VerticalOptions="CenterAndExpand" Padding="20">
+				<Label Text="Загрузка данных..." TextColor="Gray" HorizontalOptions="Center" />
+				<ActivityIndicator IsRunning="{Binding IsBusy}" Color="Accent" >
+				</ActivityIndicator>
+			</StackLayout>
 		</StackLayout>
+		
 	</ContentPage.Content>
 </ContentPage>
